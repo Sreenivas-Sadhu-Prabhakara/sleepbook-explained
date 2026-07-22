@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+  <title>Sleep Efficiency Explained — How a Sleep Diary Computes SE, TST &amp; SOL</title>
+  <meta name="description" content="An animated explainer of how a CBT-I sleep diary turns your bedtimes into sleep-onset latency, total sleep time, and sleep efficiency — and why the arithmetic can stay entirely on your device.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/sleepbook-explained/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Sreenivas Sadhu Prabhakara">
+  <meta name="keywords" content="sleep efficiency explained, how is sleep efficiency calculated, sleep diary explained, total sleep time formula, sleep onset latency, CBT-I sleep diary, SE TST TIB formula, private sleep diary">
+
+  <meta name="theme-color" content="#0B0F0E" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F3FAF6" media="(prefers-color-scheme: light)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sleep Efficiency Explained">
+  <meta property="og:title" content="Sleep Efficiency Explained — How a Sleep Diary Computes SE, TST &amp; SOL">
+  <meta property="og:description" content="An animated explainer of how a CBT-I sleep diary turns your bedtimes into sleep-onset latency, total sleep time, and sleep efficiency — and why the arithmetic can stay entirely on your device.">
+  <meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/sleepbook-explained/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/sleepbook-explained/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="One night strip resolving into a sleep-efficiency number — jade for asleep, ink gaps for awake.">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sleep Efficiency Explained — How a Sleep Diary Computes SE, TST &amp; SOL">
+  <meta name="twitter:description" content="An animated explainer of how a CBT-I sleep diary turns your bedtimes into sleep-onset latency, total sleep time, and sleep efficiency — and why the arithmetic can stay entirely on your device.">
+  <meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/sleepbook-explained/og-image.png">
+  <meta name="twitter:image:alt" content="One night strip resolving into a sleep-efficiency number — jade for asleep, ink gaps for awake.">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Structured data (data block; not affected by script-src) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sleep Efficiency Explained",
+    "description": "An animated, dependency-free explainer of how a CBT-I morning sleep diary computes sleep-onset latency, total sleep time, and sleep efficiency, and how it can run entirely on your device.",
+    "url": "https://sreenivas-sadhu-prabhakara.github.io/sleepbook-explained/",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (modern web browser)",
+    "browserRequirements": "Requires a modern web browser.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Person", "name": "Sreenivas Sadhu Prabhakara" },
+    "softwareVersion": "0.1.0",
+    "featureList": [
+      "Animated walkthrough of the sleep-efficiency formula",
+      "Visual breakdown of a single night into asleep and awake segments",
+      "Explanation of the across-midnight time engine",
+      "How connect-src 'none' makes privacy an enforced guarantee",
+      "Links to the live sleepbook diary app"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is sleep efficiency calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sleep efficiency is total sleep time divided by time in bed, times 100 (SE = TST / TIB x 100). Total sleep time is the time in bed minus the pre-sleep wait, minus the minutes to fall asleep, minus the time awake mid-night, minus the minutes lying in bed after the final awakening. This explainer animates each subtraction so the number is never a black box."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does a sleep diary need across-midnight time math?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because you get into bed on one calendar day and wake on the next. A lights-out time of 23:15 and a final-wake time of 06:30 span midnight, so the clock reads a smaller number at wake-up. A correct diary adds a full day (1440 minutes) whenever a later event reads an earlier clock time, and rejects impossible sequences rather than showing a negative duration."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can a sleep diary keep my data private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, by construction. If the page ships a Content-Security-Policy with connect-src set to none, the browser itself blocks every network request the page could make, so the diary physically cannot upload your sleep data. It is an enforced guarantee rather than a promise. The sleepbook app this explainer describes does exactly that."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this explainer medical advice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. This is an educational explainer of the arithmetic behind a sleep diary. It does not diagnose, treat, or interpret any score against a clinical threshold. CBT-I for insomnia should be guided by a qualified clinician, and symptoms such as loud snoring or breathing pauses are reasons to see one regardless of any diary."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#story">Skip to the explainer</a>
+
+  <!-- progress rail (updated by app.js; degrades gracefully without JS) -->
+  <div class="rail" aria-hidden="true"><span class="rail__fill" id="railFill"></span></div>
+
+  <!-- ================= HERO ================= -->
+  <header class="hero" id="top">
+    <div class="hero__inner">
+      <div class="brand">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#0B0F0E"/>
+          <rect x="4" y="13" width="24" height="6" rx="3" fill="#131A17"/>
+          <rect x="4" y="13" width="9"  height="6" rx="3" fill="#2EBD8B"/>
+          <rect x="17" y="13" width="11" height="6" rx="3" fill="#2EBD8B"/>
+        </svg>
+        <span class="brand__name">sleepbook<span class="brand__sub">explained</span></span>
+      </div>
+
+      <p class="eyebrow">The idea, animated &middot; no jargon, no black box</p>
+      <h1 class="hero__title">Sleep Efficiency Explained — how a sleep diary turns bedtimes into SE, TST &amp; SOL</h1>
+      <p class="hero__lede">
+        A sleep diary is just arithmetic on the times you write down each morning. This page shows
+        that arithmetic happen, one subtraction at a time — how a single night becomes a
+        <strong>sleep-efficiency</strong> number, why the clock math around midnight is tricky, and
+        how the whole thing can run without ever sending your data anywhere.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="https://sreenivas-sadhu-prabhakara.github.io/sleepbook/">Open the sleepbook diary &rarr;</a>
+        <a class="btn btn--ghost" href="#story">See how it works</a>
+      </div>
+
+      <!-- animated hero: one night strip fills and a number counts up -->
+      <figure class="herofig" aria-hidden="true">
+        <div class="herofig__strip">
+          <span class="herofig__seg herofig__seg--a"></span>
+          <span class="herofig__seg herofig__seg--b"></span>
+          <span class="herofig__seg herofig__seg--c"></span>
+        </div>
+        <figcaption class="herofig__cap">
+          <span class="herofig__k">&#9632;</span> asleep &middot; gaps = awake &middot;
+          <span class="herofig__eq">SE = TST &divide; TIB &times; 100</span>
+        </figcaption>
+      </figure>
+      <p class="visually-hidden">
+        Animation: a horizontal bar representing one night in bed fills with jade segments for the
+        time asleep, leaving ink gaps for the time awake, illustrating the sleep-efficiency formula.
+      </p>
+
+      <p class="hero__scrollhint" aria-hidden="true">scroll to begin</p>
+    </div>
+  </header>
+
+  <main id="story">
+
+    <!-- ============ 1. THE HOOK / PROBLEM ============ -->
+    <section class="scene scene--problem" id="problem" aria-labelledby="problem-h">
+      <div class="scene__inner">
+        <p class="scene__num" aria-hidden="true">01</p>
+        <h2 id="problem-h" class="scene__h reveal">Search &ldquo;sleep diary template&rdquo; and you get a page you still do the maths on.</h2>
+        <p class="scene__lede reveal reveal--d1">
+          If you have insomnia and you&rsquo;re doing CBT-I, someone has asked you to keep a diary
+          every morning for weeks. The printables you find are static. You write down six or seven
+          times, then you&rsquo;re supposed to work out — by hand, half-awake — how long you actually
+          slept and how efficient the night was. Every morning. For a fortnight.
+        </p>
+        <div class="painline reveal reveal--d2" aria-hidden="true">
+          <span class="painline__t">into bed 23:00</span>
+          <span class="painline__t">lights out 23:15</span>
+          <span class="painline__t">asleep by&hellip;?</span>
+          <span class="painline__t painline__t--q">= how many hours?</span>
+        </div>
+        <p class="scene__note reveal reveal--d3">
+          The arithmetic isn&rsquo;t hard. It&rsquo;s just fiddly, repetitive, and easy to get wrong —
+          especially the part that crosses midnight. That is exactly the kind of job a page can do
+          for you, correctly, every time.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 2. THE MOTIF: ONE NIGHT AS A STRIP ============ -->
+    <section class="scene scene--strip" id="motif" aria-labelledby="motif-h">
+      <div class="scene__inner">
+        <p class="scene__num" aria-hidden="true">02</p>
+        <h2 id="motif-h" class="scene__h reveal">One night, drawn as a strip.</h2>
+        <p class="scene__lede reveal reveal--d1">
+          Picture the whole time you spend in bed as a single bar. The parts where you were
+          <strong class="ink-jade">asleep</strong> fill in jade. The parts where you were
+          <strong class="ink-gap">awake</strong> — waiting to drop off, stirring in the night,
+          lying there after the alarm — stay as dark gaps. That strip is the whole idea.
+        </p>
+
+        <!-- the animated night strip: labelled SVG, segments draw in, in reduced-motion they are simply present -->
+        <figure class="stripfig reveal reveal--d2">
+          <svg class="nstrip" viewBox="0 0 1000 120" role="img" aria-labelledby="nstrip-title nstrip-desc">
+            <title id="nstrip-title">A single night broken into segments</title>
+            <desc id="nstrip-desc">A horizontal bar. From left to right: a gap for the pre-sleep wait and time to fall asleep, a long jade asleep block, a small gap for a mid-night awakening, another jade asleep block, then a gap for the minutes lying awake after the final wake-up.</desc>
+            <!-- track -->
+            <rect class="nstrip__track" x="0" y="40" width="1000" height="40" rx="20"/>
+            <!-- asleep blocks (jade) drawn in order -->
+            <rect class="nstrip__sleep s1" x="150" y="40" width="420" height="40" rx="20"/>
+            <rect class="nstrip__sleep s2" x="620" y="40" width="270" height="40" rx="20"/>
+            <!-- frame -->
+            <rect class="nstrip__frame" x="0" y="40" width="1000" height="40" rx="20"/>
+            <!-- gap brackets + labels -->
+            <g class="nstrip__lbl l1"><line x1="0" y1="30" x2="150" y2="30"/><text x="75" y="20">pre-sleep + falling asleep</text></g>
+            <g class="nstrip__lbl l2"><line x1="570" y1="30" x2="620" y2="30"/><text x="595" y="20">awake</text></g>
+            <g class="nstrip__lbl l3"><line x1="890" y1="30" x2="1000" y2="30"/><text x="945" y="20">early rise</text></g>
+            <text class="nstrip__cap c1" x="360" y="105">asleep</text>
+            <text class="nstrip__cap c2" x="755" y="105">asleep</text>
+          </svg>
+        </figure>
+        <p class="scene__note reveal reveal--d3">
+          Add up the jade and you have <strong>total sleep time</strong>. Take the whole bar and
+          you have <strong>time in bed</strong>. Everything else is bookkeeping.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 3. HOW: THE FORMULA, BUILT ============ ============ -->
+    <section class="scene scene--formula" id="formula" aria-labelledby="formula-h">
+      <div class="scene__inner">
+        <p class="scene__num" aria-hidden="true">03</p>
+        <h2 id="formula-h" class="scene__h reveal">How the number is built — one honest subtraction at a time.</h2>
+        <p class="scene__lede reveal reveal--d1">
+          Take a real-ish night: into bed 23:00, lights out 23:15, twenty-five minutes to fall
+          asleep, thirty-five minutes awake in the small hours, final wake 06:10, up at 06:40.
+          Here is every step, nothing hidden.
+        </p>
+
+        <ol class="steps" aria-label="How total sleep time and sleep efficiency are computed">
+          <li class="step reveal reveal--d1">
+            <span class="step__k">Time in bed</span>
+            <span class="step__eq">23:00 &rarr; 06:40 = <strong>460 min</strong></span>
+            <span class="step__why">the whole bar</span>
+          </li>
+          <li class="step step--minus reveal reveal--d1">
+            <span class="step__k">&minus; pre-sleep wait</span>
+            <span class="step__eq">23:00 &rarr; 23:15 = <strong>15 min</strong></span>
+            <span class="step__why">in bed, not yet trying</span>
+          </li>
+          <li class="step step--minus reveal reveal--d2">
+            <span class="step__k">&minus; time to fall asleep</span>
+            <span class="step__eq"><strong>25 min</strong></span>
+            <span class="step__why">sleep-onset latency (SOL)</span>
+          </li>
+          <li class="step step--minus reveal reveal--d2">
+            <span class="step__k">&minus; awake mid-night</span>
+            <span class="step__eq"><strong>35 min</strong></span>
+            <span class="step__why">wake after sleep onset (WASO)</span>
+          </li>
+          <li class="step step--minus reveal reveal--d3">
+            <span class="step__k">&minus; lying awake after waking</span>
+            <span class="step__eq">06:10 &rarr; 06:40 = <strong>30 min</strong></span>
+            <span class="step__why">early-rise minutes</span>
+          </li>
+          <li class="step step--total reveal reveal--d3">
+            <span class="step__k">Total sleep time</span>
+            <span class="step__eq">460 &minus; 15 &minus; 25 &minus; 35 &minus; 30 = <strong>355 min</strong></span>
+            <span class="step__why">the jade, added up</span>
+          </li>
+        </ol>
+
+        <div class="sefinal reveal reveal--d3" aria-labelledby="se-final-lab">
+          <p class="sefinal__eq" id="se-final-lab">
+            SE = <span class="sefinal__frac"><span>TST 355</span><span>TIB 460</span></span> &times; 100 =
+            <strong class="sefinal__val" id="seVal">77.2<span class="sefinal__pct">%</span></strong>
+          </p>
+          <p class="sefinal__note">
+            That&rsquo;s it. Sleep efficiency is the share of your time in bed you actually spent asleep.
+            No threshold is applied, no verdict is passed — it&rsquo;s a measurement, shown with its
+            own formula so you can check it yourself.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. THE MIDNIGHT TRAP ============ -->
+    <section class="scene scene--midnight" id="midnight" aria-labelledby="midnight-h">
+      <div class="scene__inner">
+        <p class="scene__num" aria-hidden="true">04</p>
+        <h2 id="midnight-h" class="scene__h reveal">The part that trips everyone up: the clock goes backwards at midnight.</h2>
+        <p class="scene__lede reveal reveal--d1">
+          Lights out at <strong>23:15</strong>, final wake at <strong>06:30</strong>. Subtract the
+          clock numbers and you get a negative. A correct diary notices the later event reads an
+          <em>earlier</em> time, adds a whole day, and gets <strong>435 minutes</strong> — not a
+          minus sign.
+        </p>
+
+        <figure class="clockfig reveal reveal--d2" aria-hidden="true">
+          <div class="clockrow">
+            <span class="clockrow__t clockrow__t--out">23:15</span>
+            <span class="clockrow__mid">midnight</span>
+            <span class="clockrow__t clockrow__t--wake">06:30</span>
+          </div>
+          <div class="clockrow__bar">
+            <span class="clockrow__wrap">+1 day (1440 min) added across the boundary</span>
+          </div>
+          <p class="clockfig__eq">(24:00 &minus; 23:15) + 06:30 = 45 + 390 = <strong>435 min in bed</strong></p>
+        </figure>
+
+        <p class="scene__note reveal reveal--d3">
+          And when the times genuinely don&rsquo;t make sense — a final wake-up after you got out of
+          bed, or a &ldquo;night&rdquo; longer than any real night — the diary refuses to invent a
+          number. It shows a plain error instead of a nonsense one. <strong>The screen can never
+          display a negative sleep time.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 5. THE PRIVACY GUARANTEE ============ -->
+    <section class="scene scene--privacy" id="privacy" aria-labelledby="privacy-h">
+      <div class="scene__inner">
+        <p class="scene__num" aria-hidden="true">05</p>
+        <h2 id="privacy-h" class="scene__h reveal">Your sleep data never leaves the page — and that&rsquo;s enforced, not promised.</h2>
+        <p class="scene__lede reveal reveal--d1">
+          Sleep is health data. The honest way to keep it private isn&rsquo;t a privacy policy you
+          have to trust — it&rsquo;s a page that <em>physically cannot</em> send anything. One line of
+          security policy does that:
+        </p>
+
+        <figure class="csp reveal reveal--d2">
+          <pre class="csp__code" aria-label="Content Security Policy directive"><code>Content-Security-Policy:
+  default-src 'self';
+  <span class="csp__hl">connect-src 'none';</span></code></pre>
+          <figcaption class="csp__cap">
+            <span class="csp__hl-text">connect-src 'none'</span> tells the browser to block every
+            outbound request the page could make — no upload, no analytics, no &ldquo;phone home&rdquo;,
+            even by accident.
+          </figcaption>
+        </figure>
+
+        <ul class="netgrid reveal reveal--d3" aria-label="What the security policy blocks">
+          <li class="net"><span class="net__x" aria-hidden="true">&times;</span> upload to a server <span class="net__tag">blocked</span></li>
+          <li class="net"><span class="net__x" aria-hidden="true">&times;</span> analytics / trackers <span class="net__tag">blocked</span></li>
+          <li class="net"><span class="net__x" aria-hidden="true">&times;</span> external fonts &amp; scripts <span class="net__tag">blocked</span></li>
+          <li class="net net--ok"><span class="net__ok" aria-hidden="true">&check;</span> save on your device <span class="net__tag net__tag--ok">allowed</span></li>
+        </ul>
+        <p class="scene__note reveal reveal--d3">
+          The diary is stored only in your browser&rsquo;s local storage. There is no account, no cloud,
+          no share link. Because nothing depends on the network, it also works with no signal at all.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 6. FEATURE TOUR ============ -->
+    <section class="scene scene--tour" id="tour" aria-labelledby="tour-h">
+      <div class="scene__inner">
+        <p class="scene__num" aria-hidden="true">06</p>
+        <h2 id="tour-h" class="scene__h reveal">What the diary itself gives you.</h2>
+        <div class="tourgrid">
+          <article class="tile reveal reveal--d1">
+            <h3 class="tile__h">The ten-field morning form</h3>
+            <p class="tile__p">The standard sleep-diary items, with inline validation and plain-language errors — a generic implementation of the published fields, not a copied instrument.</p>
+          </article>
+          <article class="tile reveal reveal--d1">
+            <h3 class="tile__h">Per-night maths, formula shown</h3>
+            <p class="tile__p">SOL, TST and sleep efficiency computed for every night, each printed next to its own formula so nothing is a black box.</p>
+          </article>
+          <article class="tile reveal reveal--d2">
+            <h3 class="tile__h">The two-week grid</h3>
+            <p class="tile__p">Fourteen nights as stacked strips with 7- and 14-day averages — the exact artifact a clinic asks you to bring.</p>
+          </article>
+          <article class="tile reveal reveal--d2">
+            <h3 class="tile__h">Trend chart</h3>
+            <p class="tile__p">Sleep efficiency and total sleep time drawn as plain SVG lines across every night. No chart library, no network.</p>
+          </article>
+          <article class="tile reveal reveal--d3">
+            <h3 class="tile__h">Print, CSV &amp; JSON</h3>
+            <p class="tile__p">A one-page printable handoff for your clinician, a spreadsheet-ready CSV, and a full JSON backup — the only ways data leaves the app.</p>
+          </article>
+          <article class="tile reveal reveal--d3">
+            <h3 class="tile__h">Nothing it pretends to be</h3>
+            <p class="tile__p">It computes; it never treats. No sleep-restriction schedules, no bedtime prescriptions, no sensor guesses about &ldquo;true&rdquo; sleep.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. CTA ============ -->
+    <section class="scene scene--cta" id="cta" aria-labelledby="cta-h">
+      <div class="scene__inner cta">
+        <figure class="cta__strips" aria-hidden="true">
+          <span class="cta__strip"><i style="left:14%;width:70%"></i><i class="mint" style="left:86%;width:8%"></i></span>
+          <span class="cta__strip"><i style="left:8%;width:82%"></i></span>
+          <span class="cta__strip"><i style="left:20%;width:36%"></i><i style="left:62%;width:26%"></i></span>
+          <span class="cta__strip"><i style="left:6%;width:88%"></i></span>
+          <span class="cta__strip"><i style="left:16%;width:30%"></i><i style="left:52%;width:20%"></i><i style="left:78%;width:14%"></i></span>
+        </figure>
+        <h2 id="cta-h" class="cta__h">Keep the diary that does the arithmetic.</h2>
+        <p class="cta__p">
+          Enter your mornings, watch the strip and the number appear, print the fortnight when your
+          clinician asks. It stays in your browser — the page can&rsquo;t send it anywhere.
+        </p>
+        <a class="btn btn--primary btn--big" href="https://sreenivas-sadhu-prabhakara.github.io/sleepbook/">Open sleepbook &rarr;</a>
+        <p class="cta__sub">Free &middot; no account &middot; runs 100% offline</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__inner">
+      <p class="foot__disclaimer">
+        <strong>Medical disclaimer.</strong> This is an educational explainer of how a sleep diary
+        computes sleep efficiency, total sleep time, and sleep-onset latency. It is not medical
+        advice, diagnosis, or treatment, and it is not a medical device. Sleep efficiency is shown as
+        the published standard SE = total sleep time &divide; time in bed &times; 100 and is not
+        interpreted against any clinical threshold. CBT-I for insomnia should be guided by a qualified
+        clinician; loud snoring, gasping, or breathing pauses are reasons to see one regardless of any
+        diary. Provided under the MIT License &ldquo;as is&rdquo;, without warranty of any kind.
+      </p>
+      <p class="foot__meta">
+        <a href="https://sreenivas-sadhu-prabhakara.github.io/sleepbook/">the sleepbook app</a> &middot;
+        <span>runs 100% in your browser</span> &middot;
+        <span>no accounts, no network, no tracking</span>
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

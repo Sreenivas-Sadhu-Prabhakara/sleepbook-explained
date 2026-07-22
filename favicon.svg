@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="sleepbook explained">
+  <rect width="32" height="32" rx="8" fill="#0B0F0E"/>
+  <rect x="4" y="10" width="24" height="5" rx="2.5" fill="#131A17"/>
+  <rect x="4" y="10" width="9"  height="5" rx="2.5" fill="#2EBD8B"/>
+  <rect x="16" y="10" width="12" height="5" rx="2.5" fill="#2EBD8B"/>
+  <path d="M13 18 L21 22 L13 26 Z" fill="#2EBD8B"/>
+</svg>

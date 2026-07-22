@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --bg: #0B0F0E; --surface: #131A17; --line: #26332D;
+    --text: #E8F3ED; --muted: #9AB0A6;
+    --jade: #2EBD8B; --mint: #9BEFCB; --frame: #2A382F; --track: #0E1512;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative; font-family: var(--sans); color: var(--text);
+    background:
+      radial-gradient(1100px 560px at 84% -12%, rgba(46,189,139,0.16), transparent 60%),
+      radial-gradient(700px 440px at 2% 4%, rgba(155,239,203,0.07), transparent 55%),
+      linear-gradient(180deg, #090C0B 0%, #0B0F0E 100%);
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 74px 84px;
+  }
+
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 20px; }
+  .mark { width: 68px; height: 68px; border-radius: 16px; box-shadow: 0 20px 44px -22px rgba(0,0,0,0.8); }
+  .wordmark { font-size: 46px; font-weight: 800; letter-spacing: -0.035em; display: inline-flex; align-items: baseline; gap: 14px; }
+  .badge { font-size: 20px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--jade); padding: 7px 16px; border: 1px solid var(--line); border-radius: 999px; }
+
+  .headline h1 { font-size: 58px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; max-width: 20ch; }
+  .headline .accent { color: var(--jade); }
+  .headline p { margin-top: 20px; font-size: 26px; font-weight: 500; color: var(--muted); line-height: 1.35; max-width: 34ch; }
+
+  /* the motif, "resolving": one long night strip → the SE number */
+  .resolve { display: flex; align-items: center; gap: 40px; }
+  .strip {
+    position: relative; height: 46px; border-radius: 23px; flex: 1;
+    background: var(--track); border: 1px solid var(--frame); overflow: hidden;
+  }
+  .seg { position: absolute; top: 0; height: 100%; background: var(--jade); }
+  .seg--mint { background: var(--mint); }
+  .arrow { color: var(--muted); font-size: 40px; font-weight: 700; }
+  .se { display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
+  .se__val { font-size: 76px; font-weight: 800; color: var(--jade); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .se__lab { font-size: 20px; color: var(--muted); font-weight: 700; margin-top: 6px; font-family: var(--mono); letter-spacing: -0.01em; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#0B0F0E"/>
+        <rect x="4" y="13" width="24" height="6" rx="3" fill="#131A17"/>
+        <rect x="4" y="13" width="9"  height="6" rx="3" fill="#2EBD8B"/>
+        <rect x="17" y="13" width="11" height="6" rx="3" fill="#2EBD8B"/>
+      </svg>
+      <span class="wordmark">sleepbook <span class="badge">explained</span></span>
+    </div>
+  </div>
+
+  <div class="headline">
+    <h1>How a sleep diary turns bedtimes into a <span class="accent">sleep-efficiency</span> number.</h1>
+    <p>The arithmetic, animated — SOL, total sleep time &amp; SE, with nothing hidden.</p>
+  </div>
+
+  <div class="resolve">
+    <div class="strip">
+      <span class="seg" style="left:12%;width:44%"></span>
+      <span class="seg" style="left:60%;width:26%"></span>
+      <span class="seg seg--mint" style="left:89%;width:7%"></span>
+    </div>
+    <span class="arrow">&rarr;</span>
+    <div class="se">
+      <span class="se__val">77.2%</span>
+      <span class="se__lab">SE = TST &divide; TIB &times; 100</span>
+    </div>
+  </div>
+</body>
+</html>

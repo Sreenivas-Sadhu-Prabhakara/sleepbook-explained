@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0B0F0E; }
+  body { display: grid; place-items: center; }
+  /* 12% safe padding on each side -> mark fills the middle 76vmin */
+  .mark { width: 76vmin; height: 76vmin; display: block; }
+</style>
+</head>
+<body>
+  <!-- icon = the night strip mid-reveal: one strip with an ink gap and a
+       jade "play" wedge, marking this as the animated explainer of sleepbook -->
+  <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+    <!-- upper night strip (the diary row) -->
+    <rect x="6" y="30" width="88" height="16" rx="8" fill="#131A17"/>
+    <rect x="6"  y="30" width="30" height="16" rx="8" fill="#2EBD8B"/>
+    <rect x="44" y="30" width="38" height="16" rx="8" fill="#2EBD8B"/>
+    <rect x="82" y="30" width="12" height="16" rx="8" fill="#9BEFCB"/>
+    <rect x="6" y="30" width="88" height="16" rx="8" fill="none" stroke="#2A382F" stroke-width="1.5"/>
+
+    <!-- "resolves to" — a jade play wedge (the animated / explainer cue) -->
+    <path d="M40 58 L64 70 L40 82 Z" fill="#2EBD8B"/>
+    <!-- lower measured bar echoing the result -->
+    <rect x="6" y="88" width="88" height="6" rx="3" fill="#131A17"/>
+    <rect x="6" y="88" width="66" height="6" rx="3" fill="#9BEFCB"/>
+  </svg>
+</body>
+</html>

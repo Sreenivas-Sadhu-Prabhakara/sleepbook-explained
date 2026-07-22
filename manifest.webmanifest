@@ -1,0 +1,24 @@
+{
+  "name": "Sleep Efficiency Explained — how a sleep diary works",
+  "short_name": "sleepbook explained",
+  "description": "An animated, dependency-free explainer of how a CBT-I sleep diary computes sleep-onset latency, total sleep time, and sleep efficiency — and how it stays entirely on your device.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#0B0F0E",
+  "theme_color": "#0B0F0E",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
